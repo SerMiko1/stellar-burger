@@ -1,5 +1,14 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppHeader, Modal, OrderInfo } from '@components';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import '../../index.css';
+import styles from './app.module.css';
+
+import {
+  AppHeader,
+  IngredientDetails,
+  Modal,
+  OrderInfo,
+  ProtectedRoute
+} from '@components';
 import {
   ConstructorPage,
   Feed,
@@ -11,49 +20,120 @@ import {
   Register,
   ResetPassword
 } from '@pages';
-import '../../index.css';
-import styles from './app.module.css';
+import { useEffect } from 'react';
+import { useDispatch } from '../../services/store';
+import { getIngredientsThunk } from '../../services/slices/ingredientsSlice';
+import { getUserThunk } from '../../services/slices/userSlice';
 
-const App = () => (
-  <BrowserRouter>
+const App = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state?.background;
+
+  // Первоначальная загрузка данных
+  useEffect(() => {
+    dispatch(getIngredientsThunk());
+    dispatch(getUserThunk());
+  }, []);
+
+  return (
     <div className={styles.app}>
       <AppHeader />
-      <>
+      <Routes location={background}>
+        <Route path='/' element={<ConstructorPage />} />
+        <Route path='/feed' element={<Feed />} />
+        <Route path='/feed/:number' element={<OrderInfo />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route
+          path='/login'
+          element={
+            <ProtectedRoute onlyUnAuth>
+              <Login />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/register'
+          element={
+            <ProtectedRoute onlyUnAuth>
+              <Register />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/forgot-password'
+          element={
+            <ProtectedRoute onlyUnAuth>
+              <ForgotPassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/reset-password'
+          element={
+            <ProtectedRoute onlyUnAuth>
+              <ResetPassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/profile'
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/profile/orders'
+          element={
+            <ProtectedRoute>
+              <ProfileOrders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/profile/orders/:number'
+          element={
+            <ProtectedRoute>
+              <OrderInfo />
+            </ProtectedRoute>
+          }
+        />
+        <Route path='*' element={<NotFound404 />} />
+      </Routes>
+
+      {background && (
         <Routes>
-          {/* Базовые маршруты */}
-          <Route path='/' element={<ConstructorPage />} />
-          <Route path='/feed' element={<Feed />} />
-          
-          {/* Защищённые маршруты */}
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/forgot-password' element={<ForgotPassword />} />
-          <Route path='/reset-password' element={<ResetPassword />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/profile/orders' element={<ProfileOrders />} />
-          
-          {/* Страница не найдена */}
-          <Route path='*' element={<NotFound404 />} />
-          
-          {/* Модальные окна */}
           <Route
             path='/feed/:number'
-            element={<Modal title='' onClose={() => {}} />}
+            element={
+              <Modal title={'Информация о заказе'} onClose={() => navigate(-1)}>
+                <OrderInfo />
+              </Modal>
+            }
           />
-          {/* TODO: убрать заглушку */}
           <Route
             path='/ingredients/:id'
-            element={<Modal title='' onClose={() => {}} />}
+            element={
+              <Modal title={'Детали ингредиента'} onClose={() => navigate(-1)}>
+                <IngredientDetails />
+              </Modal>
+            }
           />
-          {/* TODO: убрать заглушку */}
           <Route
-            path='/ingredients/:id'
-            element={<Modal title='' onClose={() => {}} />}
+            path='/profile/orders/:number'
+            element={
+              <Modal title={'Информация о заказе'} onClose={() => navigate(-1)}>
+                <OrderInfo />
+              </Modal>
+            }
           />
         </Routes>
-      </>
+      )}
     </div>
-  </BrowserRouter>
-);
+  );
+};
 
 export default App;
