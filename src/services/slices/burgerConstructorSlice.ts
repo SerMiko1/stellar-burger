@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice, nanoid } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient } from '../../utils/types';
 
+// Определение начального состояния
 export interface burgerConstructorState {
   burgerConstructor: {
     bun: TConstructorIngredient | null;
@@ -9,6 +10,7 @@ export interface burgerConstructorState {
   error: string | null;
 }
 
+// Начальное состояние
 const initialState: burgerConstructorState = {
   burgerConstructor: {
     bun: null,
@@ -17,6 +19,7 @@ const initialState: burgerConstructorState = {
   error: null
 };
 
+// Создание среза для конструктора бургера
 const burgerConstructorSlice = createSlice({
   name: 'burgerConstructor',
   initialState,
@@ -32,6 +35,8 @@ const burgerConstructorSlice = createSlice({
           state.burgerConstructor.ingredients.push(action.payload);
         }
       },
+
+      // Подготовка ингредиента
       prepare: (ingredient: TIngredient) => {
         const id = nanoid();
         return { payload: { ...ingredient, id } };

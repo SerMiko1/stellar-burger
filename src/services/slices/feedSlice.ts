@@ -2,9 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getFeedsApi, getOrderByNumberApi } from '../../utils/burger-api';
 import { TOrder } from '../../utils/types';
 
-/**
- * Асинхронно подгружаем все заказы из потока
- */
+// Асинхронно подгружаем все заказы из потока
 export const getFeedsThunk = createAsyncThunk('feeds/getFeeds', async () =>
   getFeedsApi()
 );
