@@ -38,7 +38,7 @@ const ingredientsSlice = createSlice({
       })
       .addCase(getIngredientsThunk.rejected, (state, action) => {
         state.isIngredientsLoading = false;
-        state.error = action.error.message ?? null;
+        state.error = action.error.message!;
       })
       .addCase(getIngredientsThunk.fulfilled, (state, action) => {
         state.isIngredientsLoading = false;

@@ -2,7 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getFeedsApi, getOrderByNumberApi } from '../../utils/burger-api';
 import { TOrder } from '../../utils/types';
 
-// Асинхронно подгружаем все заказы из потока
+/**
+ * Асинхронно подгружаем все заказы из потока
+ */
 export const getFeedsThunk = createAsyncThunk('feeds/getFeeds', async () =>
   getFeedsApi()
 );
@@ -56,7 +58,7 @@ const feedSlice = createSlice({
       })
       .addCase(getFeedsThunk.rejected, (state, action) => {
         state.isFeedsLoading = false;
-        state.error = action.error.message ?? null;
+        state.error = action.error.message!;
       })
       .addCase(getFeedsThunk.fulfilled, (state, action) => {
         state.isFeedsLoading = false;
@@ -70,7 +72,7 @@ const feedSlice = createSlice({
         state.isOrderLoading = true;
       })
       .addCase(getOrderByNumberThunk.rejected, (state, action) => {
-        state.error = action.error.message ?? null;
+        state.error = action.error.message!;
         state.isOrderLoading = false;
       })
       .addCase(getOrderByNumberThunk.fulfilled, (state, action) => {

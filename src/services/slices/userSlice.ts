@@ -121,7 +121,7 @@ const userSlice = createSlice({
       })
       .addCase(loginUserThunk.rejected, (state, action) => {
         state.loginUserRequest = false;
-        state.error = action.error.message ?? null;
+        state.error = action.error.message!;
       })
       .addCase(loginUserThunk.fulfilled, (state, action) => {
         state.user = action.payload;
@@ -143,7 +143,7 @@ const userSlice = createSlice({
       .addCase(getUserThunk.rejected, (state, action) => {
         state.user = null;
         state.loginUserRequest = false;
-        state.error = action.error.message ?? null;
+        state.error = action.error.message!;
       })
       .addCase(getUserThunk.fulfilled, (state, action) => {
         state.user = action.payload.user;
@@ -159,7 +159,7 @@ const userSlice = createSlice({
       .addCase(registerUserThunk.rejected, (state, action) => {
         state.isAuthenticated = false;
         state.loginUserRequest = false;
-        state.error = action.error.message ?? null;
+        state.error = action.error.message!;
       })
       .addCase(registerUserThunk.fulfilled, (state, action) => {
         state.user = action.payload;
@@ -173,7 +173,7 @@ const userSlice = createSlice({
       })
       .addCase(updateUserThunk.rejected, (state, action) => {
         state.loginUserRequest = false;
-        state.error = action.error.message ?? null;
+        state.error = action.error.message!;
       })
       .addCase(updateUserThunk.fulfilled, (state, action) => {
         state.user = action.payload.user;
@@ -186,7 +186,7 @@ const userSlice = createSlice({
         state.ordersRequest = true;
       })
       .addCase(getOrdersThunk.rejected, (state, action) => {
-        state.error = action.error.message ?? null;
+        state.error = action.error.message!;
         state.ordersRequest = false;
       })
       .addCase(getOrdersThunk.fulfilled, (state, action) => {

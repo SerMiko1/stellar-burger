@@ -45,7 +45,7 @@ const orderSlice = createSlice({
       })
       .addCase(orderBurgerThunk.rejected, (state, action) => {
         state.isOrderLoading = false;
-        state.error = action.error.message ?? null;
+        state.error = action.error.message!;
       })
       .addCase(orderBurgerThunk.fulfilled, (state, action) => {
         state.isOrderLoading = false;
