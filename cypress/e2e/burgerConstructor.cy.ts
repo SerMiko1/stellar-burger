@@ -4,7 +4,7 @@ import * as orderData from '../fixtures/order.json';
 describe('Интеграционные тесты для страницы конструктора', () => {
   beforeEach(() => {
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
-    cy.visit('http://localhost:4000/');
+    cy.visit('/');
   });
   describe('Тестирование загрузки ингредиентов и добавления их в конструктор', () => {
     it('Добавление булок и ингредиентов в заказ', () => {
@@ -104,7 +104,7 @@ describe('Интеграционные тесты для страницы кон
 
       orderModal.get(
         'div:first-child > div:first-child > button > svg'
-      ).click();;
+      ).click();
 
       cy.get('modal').should('not.exist');
 
