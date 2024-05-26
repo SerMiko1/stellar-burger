@@ -1,3 +1,4 @@
+import * as authTokens from '../fixtures/token.json';
 import * as orderData from '../fixtures/order.json';
 
 describe('Интеграционные тесты для страницы конструктора', () => {
@@ -5,7 +6,6 @@ describe('Интеграционные тесты для страницы кон
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
     cy.visit('http://localhost:4000/');
   });
-
   describe('Тестирование загрузки ингредиентов и добавления их в конструктор', () => {
     it('Добавление булок и ингредиентов в заказ', () => {
       cy.request('/api/ingredients');
@@ -79,6 +79,12 @@ describe('Интеграционные тесты для страницы кон
 
   describe('Тестирование создания заказа', () => {
     beforeEach(() => {
+      cy.intercept('GET', 'api/auth/user', { fixture: 'user.json' });
+      cy.setCookie('accessToken', authTokens.accessToken);
+      localStorage.setItem('refreshToken', authTokens.refreshToken);
+      cy.intercept('GET', 'api/auth/tokens', {
+        fixture: 'token.json'
+      });
       cy.intercept('POST', 'api/orders', { fixture: 'order.json' });
     });
 
@@ -98,13 +104,13 @@ describe('Интеграционные тесты для страницы кон
 
       orderModal.get(
         'div:first-child > div:first-child > button > svg'
-      ).click();
+      ).click();;
 
       cy.get('modal').should('not.exist');
 
-      const burgerConstructor = {
+      const burgerCunstructor = {
         constructorBunTop: cy.get('div > section:nth-child(2) > div'),
-        constructorMainIngredient: cy.get(
+        constructoMainIngredient: cy.get(
           'div > section:nth-child(2) > ul > div'
         ),
         constructorBunBottom: cy.get(
@@ -112,9 +118,14 @@ describe('Интеграционные тесты для страницы кон
         )
       };
 
-      burgerConstructor.constructorBunTop.contains('Выберите булки');
-      burgerConstructor.constructorMainIngredient.contains('Выберите начинку');
-      burgerConstructor.constructorBunBottom.contains('Выберите булки');
+      burgerCunstructor.constructorBunTop.contains('Выберите булки');
+      burgerCunstructor.constructoMainIngredient.contains('Выберите начинку');
+      burgerCunstructor.constructorBunBottom.contains('Выберите булки');
+    });
+
+    afterEach(() => {
+      cy.clearAllCookies();
+      localStorage.removeItem('refreshToken');
     });
   });
 });
