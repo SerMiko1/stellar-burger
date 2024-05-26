@@ -1,16 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-import { orderBurgerApi } from '../../utils/burger-api';
-import { TOrder } from '../../utils/types';
-
-/**
- * Асинхронно формируем заказ
- * @param data Список _id всех интересующих ингредиентов
- */
-export const orderBurgerThunk = createAsyncThunk(
-  'orders/postOrderBurger',
-  async (data: string[]) => orderBurgerApi(data)
-);
+import { TOrder } from '../../../utils/types';
+import { orderBurgerThunk } from './actions';
 
 export interface OrderState {
   order: TOrder | null;
@@ -35,6 +26,7 @@ const orderSlice = createSlice({
     clearOrder: (state) => {
       state.order = null;
       state.isOrderLoading = false;
+      state.error = null;
     }
   },
   extraReducers(builder) {

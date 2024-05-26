@@ -13,6 +13,7 @@ export const ForgotPassword: FC = () => {
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
 
+    // TODO: лучше унести в userSlice
     setError(null);
     forgotPasswordApi({ email })
       .then(() => {

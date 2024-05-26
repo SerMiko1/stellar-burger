@@ -5,8 +5,7 @@ import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 
 import { useSelector } from '../../services/store';
-import { ingredientsSelector } from '../../services/slices/ingredientsSlice';
-import { createSelector } from '@reduxjs/toolkit';
+import { ingredientsSelector } from '../../services/slices/ingredients/slice';
 
 export const BurgerIngredients: FC = () => {
   const ingredients = useSelector(ingredientsSelector);

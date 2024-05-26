@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from '../../services/store';
 import '../../index.css';
 import styles from './app.module.css';
+
 import {
   AppHeader,
   IngredientDetails,
@@ -21,8 +20,10 @@ import {
   Register,
   ResetPassword
 } from '@pages';
-import { getIngredientsThunk } from '../../services/slices/ingredientsSlice';
-import { getUserThunk } from '../../services/slices/userSlice';
+import { useEffect } from 'react';
+import { useDispatch } from '../../services/store';
+import { getIngredientsThunk } from '../../services/slices/ingredients/actions';
+import { getUserThunk } from '../../services/slices/user/actions';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -38,10 +39,7 @@ const App = () => {
 
   return (
     <div className={styles.app}>
-      {/* Хэдер приложения */}
       <AppHeader />
-
-      {/* Маршруты приложения */}
       <Routes location={background}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
@@ -106,7 +104,6 @@ const App = () => {
         <Route path='*' element={<NotFound404 />} />
       </Routes>
 
-      {/* Модальные окна */}
       {background && (
         <Routes>
           <Route

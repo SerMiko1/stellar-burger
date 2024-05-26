@@ -5,15 +5,15 @@ import { useDispatch, useSelector } from '../../services/store';
 import {
   burgerConstructorSelector,
   clearBurgerConstructor
-} from '../../services/slices/burgerConstructorSlice';
+} from '../../services/slices/burger-constructor/slice';
 import {
   clearOrder,
   isOrderLoadingSelector,
-  orderBurgerThunk,
   orderSelector
-} from '../../services/slices/orderSlice';
+} from '../../services/slices/order/slice';
 import { useNavigate } from 'react-router-dom';
-import { isAuthCheckedSelector } from '../../services/slices/userSlice';
+import { isAuthCheckedSelector } from '../../services/slices/user/slice';
+import { orderBurgerThunk } from '../../services/slices/order/actions';
 
 export const BurgerConstructor: FC = () => {
   const constructorItems = useSelector(burgerConstructorSelector);
@@ -47,6 +47,7 @@ export const BurgerConstructor: FC = () => {
 
   const price = useMemo(
     () =>
+      // TODO: как говорил классик: "сомнительно, но окэй" (2 раза считать булку)
       (constructorItems.bun ? constructorItems.bun.price * 2 : 0) +
       constructorItems.ingredients.reduce(
         (s: number, v: TConstructorIngredient) => s + v.price,

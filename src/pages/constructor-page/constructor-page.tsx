@@ -1,5 +1,5 @@
 import { useSelector } from '../../services/store';
-import { isIngredientsLoadingSelector } from '../../services/slices/ingredientsSlice';
+import { isIngredientsLoadingSelector } from '../../services/slices/ingredients/slice';
 
 import styles from './constructor-page.module.css';
 

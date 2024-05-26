@@ -4,9 +4,10 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useSelector, useDispatch } from '../../services/store';
 import { useParams } from 'react-router-dom';
-import { getOrderByNumberThunk } from '../../services/slices/feedSlice';
-import { orderSelector } from '../../services/slices/feedSlice';
-import { ingredientsSelector } from '../../services/slices/ingredientsSlice';
+
+import { orderSelector } from '../../services/slices/feed/slice';
+import { ingredientsSelector } from '../../services/slices/ingredients/slice';
+import { getOrderByNumberThunk } from '../../services/slices/feed/actions';
 
 export const OrderInfo: FC = () => {
   const dispatch = useDispatch();

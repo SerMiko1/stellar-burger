@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { TIngredient } from '../../utils/types';
-import { getIngredientsApi } from '@api';
+import { createSlice } from '@reduxjs/toolkit';
+
+import { TIngredient } from '../../../utils/types';
+import { getIngredientsThunk } from './actions';
 
 export interface IngredientsState {
   ingredients: TIngredient[];
@@ -13,14 +14,6 @@ const initialState: IngredientsState = {
   isIngredientsLoading: false,
   error: null
 };
-
-/**
- * Асинхронно подгружаем все ингредиенты
- */
-export const getIngredientsThunk = createAsyncThunk(
-  'ingredients/getIngredients',
-  async () => getIngredientsApi()
-);
 
 const ingredientsSlice = createSlice({
   name: 'ingredients',
