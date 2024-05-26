@@ -125,7 +125,7 @@ export const userOrders: TOrder[] = [
       'b097fe74-75a2-4fa2-b193-86f97909b839',
       '460e4ef0-d2c8-47c8-9da6-e5654d16c33e'
     ]
-  },
+  }
 ];
 
 export const ingredients: TIngredient[] = [...buns, ...notBuns];

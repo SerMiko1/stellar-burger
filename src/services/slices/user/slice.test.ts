@@ -69,7 +69,7 @@ describe('Тесты асинхронных экшенов', () => {
         ordersRequest: true,
         error: null
       };
-    
+
       const newState = userReducer(
         initialState,
         getOrdersThunk.fulfilled(userOrders, 'fulfilled')
